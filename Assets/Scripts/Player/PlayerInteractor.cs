@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 interface IInteractable
 {
       KeyCode interactKey { get; }
       public void Interact();
-      public void InteractMessage();
+      string GetInteractMessage();
 }
 public class PlayerInteractor : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PlayerInteractor : MonoBehaviour
       public float interactRange;
       public LayerMask interactableLayer;
       private IInteractable lastInteractedObject;
+
+      [SerializeField] private TextMeshProUGUI interactMessageText;
 
       private void Update()
       {
@@ -24,25 +27,39 @@ public class PlayerInteractor : MonoBehaviour
                   {
                         if (interactObj != lastInteractedObject)
                         {
-                              interactObj.InteractMessage();
+                              ShowInteractMessage(interactObj.GetInteractMessage());
                               lastInteractedObject = interactObj;
                         }
 
                         if (Input.GetKeyDown(interactObj.interactKey))
                         {
                               interactObj.Interact();
+                              HideInteractMessage();
                         }
                   }
                   else
                   {
                         // If not looking at an interactable object, reset the lastInteractedObject
                         lastInteractedObject = null;
+                        HideInteractMessage();
                   }
             }
             else
             {
                   // If the ray doesn't hit anything, reset the lastInteractedObject
                   lastInteractedObject = null;
+                  HideInteractMessage();
             }
+      }
+
+      private void ShowInteractMessage(string message)
+      {
+            interactMessageText.text = message;
+            interactMessageText.gameObject.SetActive(true);
+      }
+
+      private void HideInteractMessage()
+      {
+            interactMessageText.gameObject.SetActive(false);
       }
 }

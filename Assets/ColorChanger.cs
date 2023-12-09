@@ -23,6 +23,10 @@ public class ColorChanger : MonoBehaviour, IInteractable
       {
             ChangeColor();
       }
+      public string GetInteractMessage()
+      {
+            return "Press " + keyCode + " to interact";
+      }
 
       private void ChangeColor()
       {

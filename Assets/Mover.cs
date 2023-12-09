@@ -17,24 +17,22 @@ public class Mover : MonoBehaviour, IInteractable
 
       private void Start()
       {
-            startPos = transform.position;
-      }
-
-      public void InteractMessage()
-      {
-            Debug.Log("Press " + keyCode + " to interact");
+            startPos = transform.localPosition;
       }
 
       public void Interact()
       {
             if (!isMoving)
             {
-                  startPos = transform.position;
+                  startPos = transform.localPosition;
                   SetDestination();
                   StartCoroutine(MoveObject());
             }
       }
-
+      public string GetInteractMessage()
+      {
+            return "Press " + keyCode + " to interact";
+      }
       private void SetDestination()
       {
             if (moveCount % 2 == 0)
@@ -55,12 +53,12 @@ public class Mover : MonoBehaviour, IInteractable
 
             while (elapsedTime < 1 / movementSpeed)
             {
-                  transform.position = Vector3.Lerp(startPos, destination, elapsedTime / (1 / movementSpeed));
+                  transform.localPosition = Vector3.Lerp(startPos, destination, elapsedTime / (1 / movementSpeed));
                   elapsedTime += Time.deltaTime;
                   yield return null;
             }
 
-            transform.position = destination;
+            transform.localPosition = destination;
             isMoving = false;
       }
 }
