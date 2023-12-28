@@ -6,6 +6,7 @@ public class DoorShrink : MonoBehaviour
 {
       public float shrinkableDistance;
       public float distance;
+      public Camera camera;
 
 
       private void OnDrawGizmos()
@@ -18,19 +19,49 @@ public class DoorShrink : MonoBehaviour
       private void Update()
       {
             Ray();
+            // Debug.Log(Vector3.Distance(transform.position, FindObjectOfType<ShrinkAndGrow>().transform.position));
       }
       private void Ray()
       {
-            Ray ray = new Ray(transform.position, transform.forward);
+            // Assuming the camera is attached to the same GameObject as this script
 
-            // Check if the ray hits something within the specified distance
-            if (Physics.Raycast(ray, out RaycastHit hit, shrinkableDistance))
+
+            // Ensure the camera component is not null
+            if (camera != null)
             {
-                  // Get the name of the hit object
-                  string hitObjectName = hit.collider.gameObject.name;
+                  Ray ray = new Ray(camera.transform.position, camera.transform.forward);
 
-                  // Log or do something with the object's name
-                  Debug.Log("Hit object: " + hitObjectName);
+                  // Check if the ray hits something within the specified distance
+                  if (Physics.Raycast(ray, out RaycastHit hit, shrinkableDistance))
+                  {
+                        // Get the name of the hit object
+                        if (hit.collider.CompareTag("ShrinkableDoor"))
+                        {
+                              Debug.Log(Vector3.Distance(camera.transform.position, hit.transform.position));
+                              if (Vector3.Distance(camera.transform.position, FindObjectOfType<ShrinkAndGrow>().transform.position) < 3f && FindObjectOfType<ShrinkAndGrow>().transform.localScale.x == 100f)
+                              {
+                                    FindObjectOfType<ShrinkAndGrow>().isLooking = false;
+                              }
+                              else
+                              {
+                                    FindObjectOfType<ShrinkAndGrow>().isLooking = true;
+                              }
+                        }
+                        else
+                        {
+                              FindObjectOfType<ShrinkAndGrow>().isLooking = false;
+                        }
+
+                        string hitObjectName = hit.collider.gameObject.name;
+
+                        // Log or do something with the object's name
+                        Debug.Log("Hit object: " + hitObjectName);
+                  }
+                  else
+                  {
+                        // Handle the case where the ray doesn't hit anything
+                        FindObjectOfType<ShrinkAndGrow>().isLooking = false;
+                  }
             }
       }
 }

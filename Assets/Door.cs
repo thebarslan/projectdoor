@@ -37,11 +37,11 @@ public class Door : MonoBehaviour, IInteractable
       {
             if (moveCount % 2 == 0)
             {
-                  destination = Quaternion.Euler(startPos.eulerAngles + new Vector3(0, +90f, 0));
+                  destination = Quaternion.Euler(startPos.eulerAngles + new Vector3(0, 0, -90f));
             }
             else
             {
-                  destination = Quaternion.Euler(startPos.eulerAngles + new Vector3(0, -90f, 0));
+                  destination = Quaternion.Euler(startPos.eulerAngles + new Vector3(0, 0, +90f));
             }
             moveCount = moveCount % 2 + 1;
       }
