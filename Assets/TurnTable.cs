@@ -7,11 +7,6 @@ public class TurnTable : MonoBehaviour
       private bool isTurning;
       private Quaternion targetRotation;
       public float rotationSpeed = 3.0f; // Adjust the speed as needed
-
-      private void Start()
-      {
-            StartTurn();
-      }
       private void Turn()
       {
             Debug.Log("Turning");
