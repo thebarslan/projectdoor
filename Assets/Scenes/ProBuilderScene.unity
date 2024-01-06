@@ -3281,8 +3281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507f7ee8cc7e3584eaddb0985bceff38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shrinkableDistance: 8
-  distance: 8
+  shrinkableDistance: 12
+  distance: 12
   camera: {fileID: 1795306484}
 --- !u!64 &1420181360
 MeshCollider:
